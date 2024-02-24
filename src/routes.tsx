@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { HomePage } from './pages/home';
-import { StadisticsPage } from './pages/stadistics';
+import { StatisticsPage } from './pages/statistics';
 
 const Router = createBrowserRouter([
   {
@@ -9,8 +9,8 @@ const Router = createBrowserRouter([
   },
   {
     path: '/stats',
-    element: <StadisticsPage />
-  }
+    element: <StatisticsPage />,
+  },
 ]);
 
 export default Router;

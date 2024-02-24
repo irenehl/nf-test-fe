@@ -4,26 +4,26 @@ import axios from 'axios';
 type ResultType = {
   id: number;
   type: 'SOIL' | 'FERTILIZATION';
-  coordinates: number;
+  number: number;
 };
 
-const getCoordinates = (startDate?: string, endDate?: string) => {
+const getCarbon = (startDate?: string, endDate?: string) => {
   const params: Record<string, string> = {};
 
   if (startDate) params.startDate = startDate;
   if (endDate) params.endDate = endDate;
 
-  return axios.get<ResultType[]>(`${import.meta.env.VITE_API_URL}/stats/coordinates`, { params });
+  return axios.get<ResultType[]>(`${import.meta.env.VITE_API_URL}/stats/carbon`, { params });
 };
 
-export default function useGetCoordinates(startDate?: string, endDate?: string) {
+export default function useGetCarbonNum(startDate?: string, endDate?: string) {
   const {
     data: res,
     isFetching,
     isError,
   } = useQuery({
-    queryKey: ['coordinates', startDate, endDate],
-    queryFn: ({ queryKey }) => getCoordinates(queryKey[1] as string, queryKey[2] as string),
+    queryKey: ['carbon', startDate, endDate],
+    queryFn: ({ queryKey }) => getCarbon(queryKey[1] as string, queryKey[2] as string),
   });
 
   return {

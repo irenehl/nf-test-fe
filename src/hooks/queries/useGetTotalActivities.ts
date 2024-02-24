@@ -8,8 +8,8 @@ type TotalType = {
 
 const getTotal = (startDate?: string, endDate?: string) => {
   const params: Record<string, string> = {};
-  if (startDate) params.startDate = startDate;
-  if (endDate) params.endDate = endDate;
+  if (startDate) params.startDate = new Date(startDate).toISOString();
+  if (endDate) params.endDate = new Date(endDate).toISOString();
 
   return axios.get<TotalType>(`${import.meta.env.VITE_API_URL}/stats`, { params });
 };
@@ -21,7 +21,7 @@ export default function useGetTotalActivities(startDate?: string, endDate?: stri
     isError,
   } = useQuery({
     queryKey: ['total-act', startDate, endDate],
-    queryFn: ({ queryKey }) => getTotal(queryKey[1] as string, queryKey[2] as string),
+    queryFn: ({ queryKey }) => getTotal(queryKey[1], queryKey[2]),
   });
 
   return {

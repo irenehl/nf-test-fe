@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Chart as ReactChartJS } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
-import useGetCoordinates from '../../hooks/queries/useGetCoordinates';
+import useGetCarbonNum from '../../hooks/queries/useGetCarbonActivities';
 
 type ChartProps = {
   startDate?: string;
@@ -10,14 +10,14 @@ type ChartProps = {
 
 Chart.register(...registerables);
 
-const ActivitiesByCoordsChart: FC<ChartProps> = ({ startDate, endDate }) => {
-  const { res, isLoading } = useGetCoordinates(startDate, endDate);
+const ActivitiesByCarbonNum: FC<ChartProps> = ({ startDate, endDate }) => {
+  const { res, isLoading } = useGetCarbonNum(startDate, endDate);
 
   if (!res || !res.data || isLoading) return <div>loading</div>;
 
   const totalActivities = res.data.length;
 
-  const activityCoordinates = res.data.map(({ coordinates }: any) => coordinates);
+  const activityCoordinates = res.data.map(({ number }: any) => number);
 
   const labels = Array.from({ length: totalActivities }, (_, index) => (index + 1).toString());
 
@@ -49,7 +49,7 @@ const ActivitiesByCoordsChart: FC<ChartProps> = ({ startDate, endDate }) => {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Coordinates',
+          text: 'Carbon number',
         },
       },
       x: {
@@ -65,4 +65,4 @@ const ActivitiesByCoordsChart: FC<ChartProps> = ({ startDate, endDate }) => {
   return <ReactChartJS type="line" data={data} options={options as any} />;
 };
 
-export default ActivitiesByCoordsChart;
+export default ActivitiesByCarbonNum;
