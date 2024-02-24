@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Chart as ReactChartJS } from 'react-chartjs-2';
 import { Chart, registerables } from 'chart.js';
 import useGetCoordinates from '../../hooks/queries/useGetCoordinates';
+import Loading from '../loading/Loading';
 
 type ChartProps = {
   startDate?: string;
@@ -13,7 +14,7 @@ Chart.register(...registerables);
 const ActivitiesByCoordsChart: FC<ChartProps> = ({ startDate, endDate }) => {
   const { res, isLoading } = useGetCoordinates(startDate, endDate);
 
-  if (!res || !res.data || isLoading) return <div>loading</div>;
+  if (!res || !res.data || isLoading) return <Loading />;
 
   const totalActivities = res.data.length;
 
